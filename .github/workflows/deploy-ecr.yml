@@ -6,7 +6,7 @@ env:
   AWS_IAM_ROLE: arn:aws:iam::123169442427:role/github_action_ecr
 jobs:
   deploy:
-    name: Upload to Amazon S3
+    name: Docker build and publish to ECR
     runs-on: ubuntu-latest
     # These permissions are needed to interact with GitHub's OIDC Token endpoint.
     permissions:
@@ -19,8 +19,8 @@ jobs:
       - name: Configure credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::123169442427:role/github_action_ecr
-          aws-region: $AWS_REGION
+          role-to-assume: ${{ env.AWS_IAM_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
