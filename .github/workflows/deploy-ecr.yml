@@ -4,14 +4,15 @@ env:
   AWS_REGION: us-east-2
   ECR_REPOSITORY: 123169442427.dkr.ecr.us-east-2.amazonaws.com/slackbot
   AWS_IAM_ROLE: arn:aws:iam::123169442427:role/github_action_ecr
+
+permissions:
+  id-token: write
+  contents: read    # This is required for actions/checkout@v2
+
 jobs:
   deploy:
     name: Docker build and publish to ECR
     runs-on: ubuntu-latest
-    # These permissions are needed to interact with GitHub's OIDC Token endpoint.
-    permissions:
-      id-token: write
-      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,7 +20,7 @@ jobs:
       - name: Configure credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ env.AWS_IAM_ROLE }}
+          role-to-assume: arn:aws:iam::123169442427:role/github_action_ecr
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
