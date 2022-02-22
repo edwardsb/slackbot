@@ -3,7 +3,7 @@ on: push
 env:
   AWS_REGION: us-east-2
   ECR_REPOSITORY: 123169442427.dkr.ecr.us-east-2.amazonaws.com/slackbot
-  AWS_IAM_ROLE: arn:aws:iam::123169442427:role/github_action_ecr
+  AWS_IAM_ROLE: arn:aws:iam::123169442427:role/github_action_workflow_ecr_push
 
 permissions:
   id-token: write
@@ -20,7 +20,7 @@ jobs:
       - name: Configure credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::123169442427:role/github_action_ecr
+          role-to-assume: arn:aws:iam::123169442427:role/github_action_workflow_ecr_push
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
